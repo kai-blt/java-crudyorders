@@ -7,6 +7,7 @@ import local.kaiblt.ordersapp.views.CustomerOrderCount;
 import java.util.List;
 
 public interface CustomerService {
+    //GET - Read Methods
     List<Customer> getAllOrders();
 
     Customer getCustomerById(long id);
@@ -14,4 +15,11 @@ public interface CustomerService {
     List<Customer> findByCustnameContainingIgnoreCase(String likename);
 
     List<CustomerOrderCount> getCustomerOrderCount();
+
+    //POST/PUT - Create Methods
+
+    //PATCH - Update Methods
+
+    //DELETE Method
+    void delete(long id);
 }

@@ -18,15 +18,25 @@ public class OrderController {
     @Autowired
     OrderServiceImpl orderService;
 
+    // GET -- http://localhost:2019/orders/order/{id}
     @GetMapping(value = "/order/{id}", produces = "application/json")
     public ResponseEntity<?> getOrdersById(@PathVariable long id) {
         Order order = orderService.getOrderById(id);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
+    // GET -- http://localhost:2019/orders/advanceamount
     @GetMapping(value = "/advanceamount", produces = "application/json")
     public ResponseEntity<?> getAdvanceAmount() {
         List<Order> getAdvanceAmount = orderService.getAdvanceAmount();
         return new ResponseEntity<>(getAdvanceAmount, HttpStatus.OK);
     }
+
+    // POST -- http://localhost:2019/orders/order
+
+
+    // PUT -- http://localhost:2019/orders/order/{ordernum}
+
+
+    // DELETE -- http://localhost:2019/orders/order/{ordernum}
 }
