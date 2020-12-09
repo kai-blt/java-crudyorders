@@ -23,7 +23,7 @@ public class Order {
     //Many to one relationship with the Customer Table
     @ManyToOne
     @JoinColumn(name = "custcode", nullable = false)
-    @JsonIgnoreProperties("orders")
+    @JsonIgnoreProperties(value = "orders", allowSetters = true)
     private Customer customer;
 
     //Many to many rel with Payments Table
@@ -40,9 +40,9 @@ public class Order {
         //default constructor for JPA
     }
 
-    public Order(double ordamount, double advanceamaount, Customer customer, String orderdescription) {
+    public Order(double ordamount, double advanceamount, Customer customer, String orderdescription) {
         this.ordamount = ordamount;
-        this.advanceamount = advanceamaount;
+        this.advanceamount = advanceamount;
         this.orderdescription = orderdescription;
         this.customer = customer;
     }

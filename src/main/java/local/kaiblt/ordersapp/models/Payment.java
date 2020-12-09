@@ -32,6 +32,15 @@ public class Payment {
     }
 
     //***** Getters and Setters *****/
+
+    public long getPaymentid() {
+        return paymentid;
+    }
+
+    public void setPaymentid(long paymentid) {
+        this.paymentid = paymentid;
+    }
+
     public String getType() {
         return type;
     }
