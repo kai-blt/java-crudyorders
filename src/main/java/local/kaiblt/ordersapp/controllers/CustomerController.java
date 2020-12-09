@@ -74,6 +74,23 @@ public class CustomerController
     }
 
     // PUT -- http://localhost:2019/customers/customer/{custcode}
+    @PutMapping(value = "/customer/{custcode}", consumes="application/json")
+    public ResponseEntity<?> replaceCustomerById(
+        @PathVariable
+            long custcode,
+        @Valid
+        @RequestBody
+            Customer updateCustomer) {
+
+        //set customer to updates id to the passed in custcode
+        updateCustomer.setCustcode(custcode);
+
+        //save to the db and let the save method handle
+        //this as a PUT request
+        customerService.save(updateCustomer);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     // PATCH -- http://localhost:2019/customers/customer/{custcode}
 
