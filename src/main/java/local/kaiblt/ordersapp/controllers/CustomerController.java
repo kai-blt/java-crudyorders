@@ -5,11 +5,14 @@ import local.kaiblt.ordersapp.models.Order;
 import local.kaiblt.ordersapp.services.CustomerServiceImpl;
 import local.kaiblt.ordersapp.views.CustomerOrderCount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +52,25 @@ public class CustomerController
     }
 
     // POST -- http://localhost:2019/customers/customer
-    @PostMapping(value = "/customers/customer", consumes="application/json")
+    @PostMapping(value = "/customer", consumes="application/json")
     public ResponseEntity<?> addCustomer(
             @Valid
             @RequestBody
                 Customer newCustomer) {
 
-        return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
+        //Save method uses PUT or POST depending on the value of the primary key
+        //If 0, add to db POST, else if has a key replace PUT
+        newCustomer.setCustcode(0);
+        newCustomer = customerService.save(newCustomer);
+
+        //Create response headers for easy lookups
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newCustomerURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{custcode}")
+                .buildAndExpand(newCustomer.getCustcode())
+                .toUri();
+        responseHeaders.setLocation(newCustomerURI);
+        return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }
 
     // PUT -- http://localhost:2019/customers/customer/{custcode}

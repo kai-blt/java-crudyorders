@@ -17,8 +17,10 @@ public interface CustomerService {
     List<CustomerOrderCount> getCustomerOrderCount();
 
     //POST/PUT - Create Methods
+    Customer save(Customer customer);
 
     //PATCH - Update Methods
+
 
     //DELETE Method
     void delete(long id);
