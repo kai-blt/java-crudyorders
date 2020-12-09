@@ -3,6 +3,7 @@ package local.kaiblt.ordersapp.services;
 import local.kaiblt.ordersapp.models.Customer;
 import local.kaiblt.ordersapp.models.Order;
 import local.kaiblt.ordersapp.models.Payment;
+import local.kaiblt.ordersapp.repositories.CustomersRepository;
 import local.kaiblt.ordersapp.repositories.OrdersRepository;
 import local.kaiblt.ordersapp.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     PaymentRepository payrepos;
+
+    @Autowired
+    CustomersRepository custrepos;
 
     //GET Methods
     @Override
@@ -55,7 +59,9 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setOrdamount(order.getOrdamount());
         newOrder.setAdvanceamount(order.getAdvanceamount());
         newOrder.setOrderdescription(order.getOrderdescription());
-        newOrder.setCustomer(order.getCustomer());
+        newOrder.setCustomer(custrepos.findById(order.getCustomer().getCustcode())
+            .orElseThrow(() -> new EntityNotFoundException("Customer Not Found")));
+        //newOrder.setCustomer(order.getCustomer());
 
         //Many to Many relationship with Payments
         //find if provided payment id is valid, if not throw exception

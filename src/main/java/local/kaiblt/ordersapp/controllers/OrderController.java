@@ -56,8 +56,23 @@ public class OrderController {
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }
 
-    // PUT -- http://localhost:2019/orders/order/{ordernum}
+    // PUT -- http://localhost:2019/orders/order/{ordnum}
+    @PutMapping(value = "/order/{ordnum}", consumes="application/json")
+    public ResponseEntity<?> replaceOrderById(
+            @PathVariable
+                    long ordnum,
+            @Valid
+            @RequestBody
+                    Order updateOrder) {
 
+        //set customer to updates id to the passed in custcode
+        updateOrder.setOrdnum(ordnum);
+
+        //save to the db and let the save method handle
+        //this as a PUT request
+        orderService.save(updateOrder);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     // DELETE -- http://localhost:2019/orders/order/{ordnum}
     @DeleteMapping(value = "/order/{ordnum}")
