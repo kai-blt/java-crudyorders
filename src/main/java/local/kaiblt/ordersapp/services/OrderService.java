@@ -10,7 +10,7 @@ public interface OrderService {
 
     List<Order> getAdvanceAmount();
 
-    //POST Create Methods
+    //POST/PUT Create Methods
     Order save(Order order);
 
 
