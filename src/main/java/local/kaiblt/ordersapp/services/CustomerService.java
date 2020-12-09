@@ -20,7 +20,7 @@ public interface CustomerService {
     Customer save(Customer customer);
 
     //PATCH - Update Methods
-
+    Customer update(Customer customer, long custcode);
 
     //DELETE Method
     void delete(long id);

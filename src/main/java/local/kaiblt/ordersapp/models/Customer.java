@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
+@JsonIgnoreProperties(value = {"hasvalueforopeningamt", "hasvalueforreceiveamt", "hasvalueforpaymentamt", "hasvalueforoutstandingamt"})
 public class Customer {
     //***** Primary Key *****//
     @Id
@@ -19,11 +20,25 @@ public class Customer {
     private String workingarea;
     private String custcountry;
     private String grade;
-    private double openingamt;
-    private double receiveamt;
-    private double paymentamt;
-    private double outstandingamt;
     private String phone;
+
+    @Transient
+    public boolean hasvalueforopeningamt = false;
+    private double openingamt;
+
+    @Transient
+    public boolean hasvalueforreceiveamt = false;
+    private double receiveamt;
+
+    @Transient
+    public boolean hasvalueforpaymentamt = false;
+    private double paymentamt;
+
+    @Transient
+    public boolean hasvalueforoutstandingamt = false;
+    private double outstandingamt;
+
+
 
     //***** Table Relationships *****//
     //Many to One relationship with Agent Table
@@ -111,6 +126,7 @@ public class Customer {
     }
 
     public void setOpeningamt(double openingamt) {
+        hasvalueforopeningamt = true;
         this.openingamt = openingamt;
     }
 
@@ -119,6 +135,7 @@ public class Customer {
     }
 
     public void setReceiveamt(double receiveamt) {
+        hasvalueforreceiveamt = true;
         this.receiveamt = receiveamt;
     }
 
@@ -127,6 +144,7 @@ public class Customer {
     }
 
     public void setPaymentamt(double paymentamt) {
+        hasvalueforpaymentamt = true;
         this.paymentamt = paymentamt;
     }
 
@@ -135,6 +153,7 @@ public class Customer {
     }
 
     public void setOutstandingamt(double outstandingamt) {
+        hasvalueforoutstandingamt = true;
         this.outstandingamt = outstandingamt;
     }
 

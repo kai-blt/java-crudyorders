@@ -93,7 +93,62 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
+
     //PATCH - Update Methods
+    @Transactional
+    @Override
+    public Customer update(Customer customer, long custcode) {
+        //validate if customer id exists
+        Customer updateCustomer = customersrepo.findById(custcode)
+                .orElseThrow(()-> new EntityNotFoundException("Customer " + custcode + " Not Found"));
+
+        //If data was sent, replace. Otherwise leave records alone
+        //Validate single fields with non primitive types first
+        if (customer.getCustname() != null) {
+            updateCustomer.setCustname(customer.getCustname());
+        }
+
+        if (customer.getCustcity() != null) {
+            updateCustomer.setCustcity(customer.getCustcity());
+        }
+
+        if (customer.getWorkingarea() != null) {
+            updateCustomer.setWorkingarea(customer.getWorkingarea());
+        }
+
+        if (customer.getCustcountry() != null) {
+            updateCustomer.setCustcountry(customer.getCustcountry());
+        }
+
+        if (customer.getGrade() != null) {
+            updateCustomer.setCustcountry(customer.getCustcountry());
+        }
+
+        if (customer.getPhone() != null) {
+            updateCustomer.setPhone(customer.getPhone());
+        }
+
+        //If field is primitive value like double, need to
+        //use boolean flag to check! see Employee model
+        //If indeed it did have a value set, then add to updateCustomer
+        if (customer.hasvalueforopeningamt) {
+            updateCustomer.setOpeningamt(customer.getOpeningamt());
+        }
+
+        if (customer.hasvalueforreceiveamt) {
+            updateCustomer.setReceiveamt(customer.getReceiveamt());
+        }
+
+        if (customer.hasvalueforpaymentamt) {
+            updateCustomer.setPaymentamt(customer.getPaymentamt());
+        }
+
+        if (customer.hasvalueforoutstandingamt) {
+            updateCustomer.setOutstandingamt(customer.getOutstandingamt());
+        }
+
+        return null;
+    }
 
 
     //DELETE Method
